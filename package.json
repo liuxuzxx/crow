@@ -1,0 +1,33 @@
+{
+  "name": "crow",
+  "version": "2.0.1",
+  "private": true,
+  "dependencies": {
+    "antd": "^3.22.2",
+    "axios": "^0.18.0",
+    "crawler": "^1.2.0",
+    "echarts": "^4.2.1",
+    "echarts-for-react": "^2.0.15-beta.0",
+    "prop-types": "^15.6.2",
+    "react": "^16.9.0",
+    "react-color": "^2.14.1",
+    "react-contextmenu": "^2.9.3",
+    "react-dom": "^16.4.1",
+    "react-redux": "^5.0.7",
+    "react-router": "^4.3.1",
+    "react-router-dom": "^4.3.1",
+    "react-scripts": "1.1.4",
+    "redux": "^4.0.0",
+    "redux-saga": "^0.16.0",
+    "redux-thunk": "^2.3.0"
+  },
+  "scripts": {
+    "start": "set PORT=12306 && react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "redux-devtools": "^3.4.1"
+  }
+}
