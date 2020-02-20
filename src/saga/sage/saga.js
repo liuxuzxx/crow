@@ -53,7 +53,14 @@ export function* loadHomeMenuSync() {
                 menuId: 201,
                 menuName: 'Icon 图标',
                 menuType: 'video-camera',
-                children: []
+                children: [
+                    {
+                        menuId: 20101,
+                        menuName: 'Video组件的探索',
+                        menuType: 'video-camera',
+                        link: '/crow/video/video-player',
+                    }
+                ]
             }, {
                 menuId: 202,
                 menuName: 'Typography 排版',

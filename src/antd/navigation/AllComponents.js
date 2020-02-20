@@ -6,9 +6,11 @@
 import GeneralButton from '../general/GeneralButton';
 import SearchButton from '../general/SearchButton';
 import SearchFormComponent from '../form/SearchForm';
+import VideoPlayerComponent from "../video/VideoPlayerComponent";
 
 export {
     GeneralButton,
     SearchButton,
     SearchFormComponent,
+    VideoPlayerComponent,
 };

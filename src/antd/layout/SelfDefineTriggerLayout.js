@@ -3,11 +3,11 @@
  * description: 自定义触发器类型的布局
  */
 import React from 'react';
-import {Layout, Menu, Icon} from 'antd';
+import {Layout, Icon} from 'antd';
 import {connect} from 'react-redux';
 import {createLoadMenuAsyncAction} from '../../saga/type/HomeIndexAction';
 import NavigationMenu from '../navigation/NavigationMenu';
-import {GeneralButton, SearchButton, SearchFormComponent} from '../navigation/AllComponents';
+import {GeneralButton, SearchButton, SearchFormComponent, VideoPlayerComponent} from '../navigation/AllComponents';
 import {BrowserRouter as Router, Route} from 'react-router-dom';
 import EchartComponent from "../echart/EchartComponent";
 
@@ -62,6 +62,7 @@ class SelfDefineTriggerLayout extends React.Component {
                             <Route path="/crow/button/search-button" component={SearchButton}/>
                             <Route path={"/crow/echarts/echart-component"} component={EchartComponent}/>
                             <Route path={"/crow/form/search-form"} component={SearchFormComponent}/>
+                            <Route path={"/crow/video/video-player"} component={VideoPlayerComponent}/>
                         </Content>
                     </Layout>
                 </Layout>
