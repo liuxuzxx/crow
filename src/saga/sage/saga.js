@@ -2,13 +2,12 @@
  * Created by liuxu on 2018-09-05 14:21:28
  * description: 创建saga的文件
  */
-
-import {takeEvery} from 'redux-saga';
-import {put, fork} from 'redux-saga/effects';
-import {createLoadMenuAction, HOME_INDEX_ACTION_LOAD_MENU_ASYNC} from '../type/HomeIndexAction';
-
 import axios from 'axios';
+import {put, takeLatest} from 'redux-saga/effects';
+import {createLoadMenuAction, HOME_INDEX_ACTION_LOAD_MENU_ASYNC} from '../type/HomeIndexAction';
 import {createLoadLanguagePageData, FORM_LOAD_LANGUAGE_PAGE_DATA_SYNC} from "../type/FormAction";
+import {REMOTE_SERVER_URL} from "../../config/RemoteRestConfig";
+import {VIDEO_FILE_LIST_LOAD, VIDEO_FILE_LIST_LOAD_SYNC} from "../type/VideoAction";
 
 export function* loadHomeMenuSync() {
     let payload = [
@@ -100,31 +99,41 @@ export function* loadHomeMenuSync() {
 export function* loadFormLanguageSync() {
     yield put(createLoadLanguagePageData({data: [], pagination: {total: 0}, loading: false}));
     let payload = {
-        data:[{
-            'language':'Java',
-            'detail':'Java是一种面向对象的编程语言',
-        },{
-            'language':'C++',
-            'detail':'C++又叫CPP，就是C Plus Plus的意思',
-        },{
-            'language':'Python',
-            'detail':'一种脚本胶水语言',
-        },{
-            'language':'JavaScript',
-            'detail':'前端脚本语言',
-        },{
-            'language':'Go',
-            'detail':'速度快，有可能替代Java的前景类语言',
+        data: [{
+            'language': 'Java',
+            'detail': 'Java是一种面向对象的编程语言',
+        }, {
+            'language': 'C++',
+            'detail': 'C++又叫CPP，就是C Plus Plus的意思',
+        }, {
+            'language': 'Python',
+            'detail': '一种脚本胶水语言',
+        }, {
+            'language': 'JavaScript',
+            'detail': '前端脚本语言',
+        }, {
+            'language': 'Go',
+            'detail': '速度快，有可能替代Java的前景类语言',
         }],
-        pagination:{total:5},
-        loading:false,
+        pagination: {total: 5},
+        loading: false,
     };
 
     yield put(createLoadLanguagePageData(payload));
 }
 
-// Our watcher Saga: 在每个 INCREMENT_ASYNC action 调用后，派生一个新的 incrementAsync 任务
+export function* loadVideoFilesSync() {
+    let url = REMOTE_SERVER_URL + "/api/rattrap/video/video-files";
+    let data = {};
+    yield axios.get(url)
+        .then(function (response) {
+            data = response.data.data;
+        });
+    yield put({type: VIDEO_FILE_LIST_LOAD, payload: data});
+}
+
 export default function* watchIncrementAsync() {
-    yield takeEvery(HOME_INDEX_ACTION_LOAD_MENU_ASYNC, loadHomeMenuSync);
-    yield takeEvery(FORM_LOAD_LANGUAGE_PAGE_DATA_SYNC, loadFormLanguageSync);
+    yield takeLatest(HOME_INDEX_ACTION_LOAD_MENU_ASYNC, loadHomeMenuSync);
+    yield takeLatest(FORM_LOAD_LANGUAGE_PAGE_DATA_SYNC, loadFormLanguageSync);
+    yield takeLatest(VIDEO_FILE_LIST_LOAD_SYNC, loadVideoFilesSync);
 }

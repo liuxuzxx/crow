@@ -25,7 +25,7 @@ class VideoPlayerComponent extends React.Component {
     };
 
     render() {
-        let url = REMOTE_SERVER_URL + "/v1/api/rattrap/video/micro-video";
+        let url = REMOTE_SERVER_URL + "/api/rattrap/video/micro-video";
         return (
             <ReactPlayer
                 className='react-player'
