@@ -5,7 +5,7 @@
  */
 import {VIDEO_FILE_LIST_LOAD} from "../type/VideoAction";
 
-const videoReducer = (state = {videoFiles: []}, action) => {
+const videoReducer = (state = {videoFiles: {data:[]}}, action) => {
     switch (action.type) {
         case VIDEO_FILE_LIST_LOAD:
             return {

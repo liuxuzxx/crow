@@ -88,7 +88,7 @@ export function* loadHomeMenuSync() {
                     menuId: 50001,
                     menuName: 'Video',
                     menuType: 'video-camera',
-                    link: '/crow/video/video-player',
+                    link: '/crow/video/video-files',
                 }
             ]
         }
@@ -127,7 +127,7 @@ export function* loadVideoFilesSync() {
     let data = {};
     yield axios.get(url)
         .then(function (response) {
-            data = response.data.data;
+            data = response.data;
         });
     yield put({type: VIDEO_FILE_LIST_LOAD, payload: data});
 }

@@ -7,6 +7,7 @@
 import React from "react";
 import {connect} from "react-redux";
 import {VIDEO_FILE_LIST_LOAD_SYNC} from "../../saga/type/VideoAction";
+import {List} from "antd";
 
 
 class VideoFileShowComponent extends React.Component{
@@ -20,7 +21,20 @@ class VideoFileShowComponent extends React.Component{
     }
 
     render() {
-
+        const {videoFiles} = this.props;
+        console.log(videoFiles);
+        return (
+            <div>
+                <List
+                    size="large"
+                    header={<div>头部信息</div>}
+                    footer={<div>尾部信息</div>}
+                    bordered
+                    dataSource={videoFiles.data}
+                    renderItem={item => <List.Item>{item.FileName}</List.Item>}
+                />
+            </div>
+        );
     }
 }
 
