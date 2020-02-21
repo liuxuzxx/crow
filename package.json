@@ -19,7 +19,8 @@
     "react-scripts": "1.1.4",
     "redux": "^4.0.0",
     "redux-saga": "^0.16.0",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "react-player": "^1.15.2"
   },
   "scripts": {
     "start": "set PORT=12306 && react-scripts start",

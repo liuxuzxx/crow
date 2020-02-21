@@ -5,8 +5,6 @@
 import {HOME_INDEX_ACTION_LOAD_MENU} from '../type/HomeIndexAction';
 
 const homeMenuReducer = (state = {menus: []}, action) => {
-    console.log('查看state',state);
-    console.log('查看action',action);
     switch (action.type) {
         case HOME_INDEX_ACTION_LOAD_MENU:
             return {
