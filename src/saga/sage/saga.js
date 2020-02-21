@@ -11,7 +11,6 @@ import axios from 'axios';
 import {createLoadLanguagePageData, FORM_LOAD_LANGUAGE_PAGE_DATA_SYNC} from "../type/FormAction";
 
 export function* loadHomeMenuSync() {
-    console.log(`Async加载异步数据Menu信息!`);
     let payload = [
         {
             menuId: 1,
@@ -53,14 +52,7 @@ export function* loadHomeMenuSync() {
                 menuId: 201,
                 menuName: 'Icon 图标',
                 menuType: 'video-camera',
-                children: [
-                    {
-                        menuId: 20101,
-                        menuName: 'Video组件的探索',
-                        menuType: 'video-camera',
-                        link: '/crow/video/video-player',
-                    }
-                ]
+                children: []
             }, {
                 menuId: 202,
                 menuName: 'Typography 排版',
@@ -85,6 +77,19 @@ export function* loadHomeMenuSync() {
                     menuType: 'video-camera',
                     link: '/crow/form/search-form',
                     component: 'SearchFormComponent',
+                }
+            ]
+        },
+        {
+            menuId: 5,
+            menuName: '哪吒脑海',
+            menuType: 'video-camera',
+            children: [
+                {
+                    menuId: 50001,
+                    menuName: 'Video',
+                    menuType: 'video-camera',
+                    link: '/crow/video/video-player',
                 }
             ]
         }
