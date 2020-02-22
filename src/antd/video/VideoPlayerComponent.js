@@ -31,8 +31,8 @@ class VideoPlayerComponent extends React.Component {
                 className='react-player'
                 ref={this.ref}
                 url={url}
-                width='50%'
-                height='50%'
+                width='100%'
+                height='100%'
                 playing={false}
                 playbackRate={10.0}
                 controls={true}
