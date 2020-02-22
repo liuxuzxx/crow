@@ -5,7 +5,7 @@
  */
 import React from "react";
 import {connect} from 'react-redux';
-import {VIDEO_FILE_LIST_LOAD_SYNC} from "../../saga/type/VideoAction";
+import {createLoadVideoFilesSync, createPlayVideoAction, VIDEO_FILE_LIST_LOAD_SYNC} from "../../saga/type/VideoAction";
 import {Card, List} from "antd";
 
 class VideoFilesShowComponent extends React.Component {
@@ -19,7 +19,8 @@ class VideoFilesShowComponent extends React.Component {
     }
 
     handleCardClick = (videoFile) => {
-        console.log(`查看信息:${videoFile.fileName}`);
+        const {playVideo} = this.props;
+        playVideo(videoFile);
     };
 
     render() {
@@ -32,7 +33,7 @@ class VideoFilesShowComponent extends React.Component {
                     <List.Item>
                         <Card
                             title={item.fileName}
-                            onClick={()=>this.handleCardClick(item)}>
+                            onClick={() => this.handleCardClick(item)}>
                             {item.fileName}
                         </Card>
                     </List.Item>
@@ -49,8 +50,11 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => {
     return {
         loadVideoFiles: () => {
-            dispatch({type: VIDEO_FILE_LIST_LOAD_SYNC});
-        }
+            dispatch(createLoadVideoFilesSync());
+        },
+        playVideo: (videoFile) => {
+            dispatch(createPlayVideoAction(videoFile));
+        },
     }
 };
 

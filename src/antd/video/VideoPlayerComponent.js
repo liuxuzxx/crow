@@ -25,7 +25,9 @@ class VideoPlayerComponent extends React.Component {
     };
 
     render() {
-        let url = REMOTE_SERVER_URL + "/api/rattrap/video/micro-video";
+        const {playVideoFile} = this.props;
+        const {videoId} = playVideoFile;
+        let url = REMOTE_SERVER_URL + "/api/rattrap/video/" + videoId + "/play-video";
         return (
             <ReactPlayer
                 className='react-player'
@@ -33,8 +35,8 @@ class VideoPlayerComponent extends React.Component {
                 url={url}
                 width='100%'
                 height='100%'
-                playing={false}
-                playbackRate={10.0}
+                playing={true}
+                playbackRate={1.0}
                 controls={true}
                 onPause={this.handlePause}
             />
@@ -42,4 +44,12 @@ class VideoPlayerComponent extends React.Component {
     }
 }
 
-export default connect(null, null)(VideoPlayerComponent);
+const mapStateToProps = (state) => ({
+    playVideoFile: state.video.playVideoFile,
+});
+
+const mapDispatchToProps = (dispatch) => {
+    return {}
+};
+
+export default connect(mapStateToProps, null)(VideoPlayerComponent);
