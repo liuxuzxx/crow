@@ -42,11 +42,17 @@ class SelfDefineTriggerLayout extends React.Component {
                         trigger={null}
                         collapsible
                         collapsed={this.state.collapsed}
+                        style={{
+                            overflow: 'auto',
+                            height: '100vh',
+                            position: 'fixed',
+                            left: 0,
+                        }}
                     >
                         <div className="logo"/>
                         <NavigationMenu menus={menus}/>
                     </Sider>
-                    <Layout>
+                    <Layout style={{ marginLeft: 200 }}>
                         <Header style={{background: '#fff', padding: 0}}>
                             <Icon
                                 className="trigger"
