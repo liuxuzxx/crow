@@ -8,6 +8,8 @@ import React from "react";
 import {connect} from "react-redux";
 import ReactPlayer from "react-player";
 import {REMOTE_SERVER_URL} from "../../config/RemoteRestConfig";
+import keydown from "react-keydown";
+
 
 class VideoPlayerComponent extends React.Component {
     constructor(props) {
@@ -17,6 +19,11 @@ class VideoPlayerComponent extends React.Component {
 
     ref = player => {
         this.player = player
+    };
+
+    @keydown('enter')
+    handleEnterEvent=()=>{
+        console.log('拦截键盘的Enter事件');
     };
 
     handlePause = () => {
