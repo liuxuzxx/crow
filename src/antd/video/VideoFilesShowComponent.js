@@ -5,13 +5,10 @@
  */
 import React from "react";
 import {connect} from 'react-redux';
-import {createLoadVideoFilesSync, createPlayVideoAction, VIDEO_FILE_LIST_LOAD_SYNC} from "../../saga/type/VideoAction";
+import {createLoadVideoFilesSync, createPlayVideoAction} from "../../saga/type/VideoAction";
 import {Card, List} from "antd";
 
 class VideoFilesShowComponent extends React.Component {
-    constructor(props) {
-        super(props);
-    }
 
     componentDidMount() {
         const {loadVideoFiles} = this.props;

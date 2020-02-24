@@ -12,9 +12,6 @@ import VideoFilesShowComponent from "./VideoFilesShowComponent";
 
 
 class VideoPlayerTagComponent extends React.Component {
-    constructor(props) {
-        super(props);
-    }
 
     render() {
         return (
