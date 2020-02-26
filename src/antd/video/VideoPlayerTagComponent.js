@@ -6,7 +6,7 @@
 
 import React from "react";
 import {connect} from "react-redux";
-import {Row, Col} from "antd";
+import {Row, Col, Divider} from "antd";
 import VideoPlayerComponent from "./VideoPlayerComponent";
 import VideoFilesShowComponent from "./VideoFilesShowComponent";
 
@@ -23,6 +23,7 @@ class VideoPlayerTagComponent extends React.Component {
                                 <VideoPlayerComponent/>
                             </Col>
                         </Row>
+                        <Divider/>
                         <Row gutter={[16, 16]}>
                             <Col span={24}>
                                 <VideoFilesShowComponent/>
