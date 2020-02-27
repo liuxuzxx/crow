@@ -128,7 +128,7 @@ class VideoPlayerComponent extends React.Component {
         const {playbackRate} = this.state;
         const {playVideoFile} = this.props;
         const {videoId} = playVideoFile;
-        let url = REMOTE_SERVER_URL + "/api/rattrap/video/" + videoId + "/play-video";
+        let url = REMOTE_SERVER_URL + "/api/rattrap/video/video-file/" + videoId + "/play-video";
         return (
             <div>
                 <Row gutter={[16, 16]}>

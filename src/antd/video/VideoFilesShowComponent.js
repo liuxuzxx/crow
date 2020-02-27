@@ -7,6 +7,9 @@ import React from "react";
 import {connect} from 'react-redux';
 import {createLoadVideoFilesSync, createPlayVideoAction, CUT_VIDEO_LIST_LOAD_SYNC} from "../../saga/type/VideoAction";
 import {Card, List} from "antd";
+import {REMOTE_SERVER_URL} from "../../config/RemoteRestConfig";
+
+const {Meta} = Card;
 
 class VideoFilesShowComponent extends React.Component {
 
@@ -30,10 +33,13 @@ class VideoFilesShowComponent extends React.Component {
                 dataSource={videoFiles.data}
                 renderItem={item => (
                     <List.Item>
-                        <Card
-                            title={item.fileName}
-                            onClick={() => this.handleCardClick(item)}>
-                            {item.fileName}
+                        <Card hoverable
+                              style={{width: 240}}
+                              cover={<img alt="example"
+                                          src={REMOTE_SERVER_URL + "/api/rattrap/video/video-file/" + item.videoId + "/header-frame"}/>}
+                              onClick={() => this.handleCardClick(item)}
+                        >
+                            <Meta title={item.fileName} description="视频"/>
                         </Card>
                     </List.Item>
                 )}
