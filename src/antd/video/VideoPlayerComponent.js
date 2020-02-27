@@ -9,9 +9,12 @@ import {connect} from "react-redux";
 import ReactPlayer from "react-player";
 import {REMOTE_SERVER_URL} from "../../config/RemoteRestConfig";
 import keydown from "react-keydown";
-import {Divider, Icon, Row, message, Col} from "antd";
+import {Divider, Icon, Row, message, Col,Modal} from "antd";
 import axios from 'axios';
+import {CUT_VIDEO_LIST_LOAD_SYNC} from "../../saga/type/VideoAction";
+import {loadCutVideoFilesSync} from "../../saga/sage/saga";
 
+const {confirm} = Modal;
 
 class VideoPlayerComponent extends React.Component {
 
@@ -52,7 +55,7 @@ class VideoPlayerComponent extends React.Component {
     handleCtrlRightEvent() {
         console.log(`选择了加速视频10秒钟...`);
         this.setState({seeking: false});
-        let currentPlayTime = this.player.getCurrentTime() + 10;
+        let currentPlayTime = this.player.getCurrentTime() + 1;
         this.player.seekTo(currentPlayTime);
     }
 
@@ -68,7 +71,7 @@ class VideoPlayerComponent extends React.Component {
 
     @keydown("ctrl+left")
     handleCtrlLeftEvent() {
-        let currentPlayTime = this.player.getCurrentTime() - 10;
+        let currentPlayTime = this.player.getCurrentTime() - 1;
         this.player.seekTo(currentPlayTime);
     }
 
@@ -89,21 +92,36 @@ class VideoPlayerComponent extends React.Component {
     handleScissorEvent = () => {
         let currentTime = this.player.getCurrentTime();
         message.success(`开始剪切视频了!开始时间为:${currentTime}`);
-        this.cutVideoInformation = {...this.cutVideoInformation, startTime: currentTime};
+        this.cutVideoInformation = {...this.cutVideoInformation, startTime: JSON.stringify(currentTime)};
     };
 
     handleCheckEvent = () => {
-        const {playVideoFile} = this.props;
-        const {videoId} = playVideoFile;
+        const {playVideoFile,loadCutVideoFiles} = this.props;
+        const {videoId,fileName} = playVideoFile;
         let currentTime = this.player.getCurrentTime();
-        message.success(`剪切视频完成!结束时间为:${currentTime}`);
-        this.cutVideoInformation = {...this.cutVideoInformation, endTime: currentTime, parentId: videoId};
-        message.success(`提交的对象内容是:${JSON.stringify(this.cutVideoInformation)}`);
-        let url = REMOTE_SERVER_URL + "/api/rattrap/video/cut-video";
-        axios.post(url, this.cutVideoInformation)
-            .then((response) => {
-                console.log(`${JSON.stringify(response)}  查看回复的信息`);
-            });
+        this.cutVideoInformation = {...this.cutVideoInformation, endTime: JSON.stringify(currentTime), parentId: videoId};
+        let tempCutVideoInformation = this.cutVideoInformation;
+
+        let confirmContext = <div>
+            <p>{`原始视频名字：${fileName}`}</p>
+            <p>{`时       间:${tempCutVideoInformation.startTime}---${tempCutVideoInformation.endTime}`}</p>
+        </div>;
+
+        confirm({
+            title: '您是否剪切这个视频?',
+            content: confirmContext,
+            onOk() {
+                let url = REMOTE_SERVER_URL + "/api/rattrap/video/cut-video";
+                axios.post(url, tempCutVideoInformation)
+                    .then((response) => {
+                        message.success('截取视频成功!');
+                        loadCutVideoFiles(videoId);
+                    });
+            },
+            onCancel() {
+                message.warn(`您取消了这次裁剪活动!`)
+            },
+        });
     };
 
     render() {
@@ -157,7 +175,11 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => {
-    return {}
+    return {
+        loadCutVideoFiles: (parentId) => {
+            dispatch({type: CUT_VIDEO_LIST_LOAD_SYNC, parentId: parentId});
+        },
+    };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(VideoPlayerComponent);

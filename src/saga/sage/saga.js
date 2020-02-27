@@ -7,7 +7,12 @@ import {put, takeLatest} from 'redux-saga/effects';
 import {createLoadMenuAction, HOME_INDEX_ACTION_LOAD_MENU_ASYNC} from '../type/HomeIndexAction';
 import {createLoadLanguagePageData, FORM_LOAD_LANGUAGE_PAGE_DATA_SYNC} from "../type/FormAction";
 import {REMOTE_SERVER_URL} from "../../config/RemoteRestConfig";
-import {VIDEO_FILE_LIST_LOAD, VIDEO_FILE_LIST_LOAD_SYNC} from "../type/VideoAction";
+import {
+    createCutVideoLoad,
+    CUT_VIDEO_LIST_LOAD_SYNC,
+    VIDEO_FILE_LIST_LOAD,
+    VIDEO_FILE_LIST_LOAD_SYNC
+} from "../type/VideoAction";
 
 export function* loadHomeMenuSync() {
     let payload = [
@@ -132,8 +137,20 @@ export function* loadVideoFilesSync() {
     yield put({type: VIDEO_FILE_LIST_LOAD, payload: data});
 }
 
+export function* loadCutVideoFilesSync(param) {
+    const {parentId} =  param;
+    let url = REMOTE_SERVER_URL + "/api/rattrap/video/cut-video/" + parentId + "/videos";
+    let data = {};
+    yield axios.get(url)
+        .then(function (response) {
+            data = response.data;
+        });
+    yield put(createCutVideoLoad(data));
+}
+
 export default function* watchIncrementAsync() {
     yield takeLatest(HOME_INDEX_ACTION_LOAD_MENU_ASYNC, loadHomeMenuSync);
     yield takeLatest(FORM_LOAD_LANGUAGE_PAGE_DATA_SYNC, loadFormLanguageSync);
     yield takeLatest(VIDEO_FILE_LIST_LOAD_SYNC, loadVideoFilesSync);
+    yield takeLatest(CUT_VIDEO_LIST_LOAD_SYNC, loadCutVideoFilesSync);
 }

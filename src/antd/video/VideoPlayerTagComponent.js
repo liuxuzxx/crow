@@ -9,6 +9,7 @@ import {connect} from "react-redux";
 import {Row, Col, Divider} from "antd";
 import VideoPlayerComponent from "./VideoPlayerComponent";
 import VideoFilesShowComponent from "./VideoFilesShowComponent";
+import CutVideoFilesComponent from "./CutVideoFilesComponent";
 
 
 class VideoPlayerTagComponent extends React.Component {
@@ -31,7 +32,7 @@ class VideoPlayerTagComponent extends React.Component {
                         </Row>
                     </Col>
                     <Col span={4}>
-
+                        <CutVideoFilesComponent/>
                     </Col>
                 </Row>
             </div>
