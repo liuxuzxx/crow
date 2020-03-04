@@ -17,6 +17,11 @@ const {confirm} = Modal;
 
 class VideoPlayerComponent extends React.Component {
 
+    constructor(props) {
+        super(props);
+        this.handleMouseMove = this.handleMouseMove.bind(this);
+    }
+
     config = {
         playbackRateMax: 15,
         playbackRateMin: 1,
@@ -38,10 +43,13 @@ class VideoPlayerComponent extends React.Component {
 
     ref = player => {
         this.player = player;
-        this.player.getInternalPlayer().addEventListener("mousemove", function (event) {
-            console.log('鼠标移动上去了');
-            console.log(event);
-        })
+    };
+
+    progressRef = progress => {
+        this.progress = progress;
+        this.progress.addEventListener("mousemove", function (event) {
+            console.log(event.offsetX);
+        });
     };
 
     @keydown("ctrl+up")
@@ -56,7 +64,6 @@ class VideoPlayerComponent extends React.Component {
 
     @keydown("ctrl+right")
     handleCtrlRightEvent() {
-        console.log(`选择了加速视频10秒钟...`);
         this.setState({seeking: false});
         let currentPlayTime = this.player.getCurrentTime() + 1;
         this.player.seekTo(currentPlayTime);
@@ -131,6 +138,10 @@ class VideoPlayerComponent extends React.Component {
         });
     };
 
+    handleMouseMove(event) {
+        console.log(event);
+    }
+
     render() {
         const {playbackRate} = this.state;
         const {playVideoFile} = this.props;
@@ -156,6 +167,8 @@ class VideoPlayerComponent extends React.Component {
                             onDuration={this.handleDuration}
                         />
                     </Row>
+                    <div style={{width: 625, height: 10, backgroundColor: '#ff0000', marginLeft: 15}}
+                         ref={this.progressRef}/>
                     <Divider/>
                     <Row span={3}>
                         <Col span={3}>
