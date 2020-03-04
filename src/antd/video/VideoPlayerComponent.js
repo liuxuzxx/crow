@@ -9,10 +9,9 @@ import {connect} from "react-redux";
 import ReactPlayer from "react-player";
 import {REMOTE_SERVER_URL} from "../../config/RemoteRestConfig";
 import keydown from "react-keydown";
-import {Divider, Icon, Row, message, Col,Modal} from "antd";
+import {Divider, Icon, Row, message, Col, Modal} from "antd";
 import axios from 'axios';
 import {CUT_VIDEO_LIST_LOAD_SYNC} from "../../saga/type/VideoAction";
-import {loadCutVideoFilesSync} from "../../saga/sage/saga";
 
 const {confirm} = Modal;
 
@@ -38,7 +37,11 @@ class VideoPlayerComponent extends React.Component {
     };
 
     ref = player => {
-        this.player = player
+        this.player = player;
+        this.player.getInternalPlayer().addEventListener("mousemove", function (event) {
+            console.log('鼠标移动上去了');
+            console.log(event);
+        })
     };
 
     @keydown("ctrl+up")
@@ -96,10 +99,14 @@ class VideoPlayerComponent extends React.Component {
     };
 
     handleCheckEvent = () => {
-        const {playVideoFile,loadCutVideoFiles} = this.props;
-        const {videoId,fileName} = playVideoFile;
+        const {playVideoFile, loadCutVideoFiles} = this.props;
+        const {videoId, fileName} = playVideoFile;
         let currentTime = this.player.getCurrentTime();
-        this.cutVideoInformation = {...this.cutVideoInformation, endTime: JSON.stringify(currentTime), parentId: videoId};
+        this.cutVideoInformation = {
+            ...this.cutVideoInformation,
+            endTime: JSON.stringify(currentTime),
+            parentId: videoId
+        };
         let tempCutVideoInformation = this.cutVideoInformation;
 
         let confirmContext = <div>
@@ -128,18 +135,20 @@ class VideoPlayerComponent extends React.Component {
         const {playbackRate} = this.state;
         const {playVideoFile} = this.props;
         const {videoId} = playVideoFile;
-        let url = REMOTE_SERVER_URL + "/api/rattrap/video/video-file/" + videoId + "/play-video";
+
+        let url = REMOTE_SERVER_URL + "/api/rattrap/video/video-file/" + 1 + "/play-video";
         return (
             <div>
                 <Row gutter={[16, 16]}>
-                    <Row span={20}>
+                    <Row span={18}>
                         <ReactPlayer
                             className='react-player'
                             ref={this.ref}
                             url={url}
-                            width='100%'
-                            height='100%'
-                            playing={true}
+                            width='50%'
+                            height='50%'
+                            playing={false}
+                            progressInterval={10}
                             playbackRate={playbackRate}
                             controls={true}
                             onPause={this.handlePause}
@@ -148,7 +157,7 @@ class VideoPlayerComponent extends React.Component {
                         />
                     </Row>
                     <Divider/>
-                    <Row span={4}>
+                    <Row span={3}>
                         <Col span={3}>
                             <Icon
                                 type="scissor"
@@ -164,6 +173,7 @@ class VideoPlayerComponent extends React.Component {
                                   onClick={this.handleCheckEvent}/>
                         </Col>
                     </Row>
+                    <Divider/>
                 </Row>
             </div>
         );
