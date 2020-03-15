@@ -3,7 +3,7 @@
  * description: 自定义触发器类型的布局
  */
 import React from 'react';
-import { Icon as LegacyIcon } from '@ant-design/compatible';
+import Icon from '@ant-design/icons';
 import { Layout } from 'antd';
 import {connect} from 'react-redux';
 import {createLoadMenuAsyncAction} from '../../saga/type/HomeIndexAction';
@@ -55,7 +55,7 @@ class SelfDefineTriggerLayout extends React.Component {
                     </Sider>
                     <Layout style={{ marginLeft: 200 }}>
                         <Header style={{background: '#fff', padding: 0}}>
-                            <LegacyIcon
+                            <Icon
                                 className="trigger"
                                 type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}
                                 onClick={this.toggle}

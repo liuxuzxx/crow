@@ -4,7 +4,7 @@
  */
 
 import React from 'react';
-import { Icon as LegacyIcon } from '@ant-design/compatible';
+import Icon from '@ant-design/icons';
 import { Menu } from 'antd';
 import {Link} from 'react-router-dom';
 
@@ -22,11 +22,11 @@ class NavigationMenu extends React.Component {
      */
     fillMenu = (menus) => {
         return menus.map(menu => menu.children ?
-            <SubMenu key={menu.menuId} title={<span><LegacyIcon type={menu.menuType}/>{menu.menuName}</span>}>
+            <SubMenu key={menu.menuId} title={<span><Icon type={menu.menuType}/>{menu.menuName}</span>}>
                 {this.fillMenu(menu.children)}
             </SubMenu> :
             <Menu.Item key={menu.menuId}>
-                <LegacyIcon type={menu.menuType}/>
+                <Icon type={menu.menuType}/>
                 <Link to={menu.link}>{menu.menuName}</Link>
             </Menu.Item>);
     };

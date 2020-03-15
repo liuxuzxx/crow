@@ -9,11 +9,11 @@ import {connect} from "react-redux";
 import ReactPlayer from "react-player";
 import {REMOTE_SERVER_URL} from "../../config/RemoteRestConfig";
 import keydown from "react-keydown";
-import { CheckCircleOutlined, ScissorOutlined } from '@ant-design/icons';
-import { Divider, Row, message, Col, Modal } from "antd";
+import {CheckCircleOutlined, ScissorOutlined} from '@ant-design/icons';
+import {Divider, Row, message, Col, Modal} from "antd";
 import axios from 'axios';
 import {CUT_VIDEO_LIST_LOAD_SYNC} from "../../saga/type/VideoAction";
-import {loadCutVideoFilesSync} from "../../saga/sage/saga";
+import VideoJSPlayerComponent from "./VideoJSPlayerComponent";
 
 const {confirm} = Modal;
 
@@ -97,10 +97,14 @@ class VideoPlayerComponent extends React.Component {
     };
 
     handleCheckEvent = () => {
-        const {playVideoFile,loadCutVideoFiles} = this.props;
-        const {videoId,fileName} = playVideoFile;
+        const {playVideoFile, loadCutVideoFiles} = this.props;
+        const {videoId, fileName} = playVideoFile;
         let currentTime = this.player.getCurrentTime();
-        this.cutVideoInformation = {...this.cutVideoInformation, endTime: JSON.stringify(currentTime), parentId: videoId};
+        this.cutVideoInformation = {
+            ...this.cutVideoInformation,
+            endTime: JSON.stringify(currentTime),
+            parentId: videoId
+        };
         let tempCutVideoInformation = this.cutVideoInformation;
 
         let confirmContext = <div>
@@ -125,16 +129,8 @@ class VideoPlayerComponent extends React.Component {
         });
     };
 
-    render() {
-        const {playbackRate} = this.state;
-        const {playVideoFile} = this.props;
-        const {videoId} = playVideoFile;
-        let url = REMOTE_SERVER_URL + "/api/rattrap/video/video-file/" + videoId + "/play-video";
-        return (
-            <div>
-                <Row gutter={[16, 16]}>
-                    <Row span={20}>
-                        <ReactPlayer
+    videoReact = () => {
+        {/*<ReactPlayer
                             className='react-player'
                             ref={this.ref}
                             url={url}
@@ -146,7 +142,28 @@ class VideoPlayerComponent extends React.Component {
                             onPause={this.handlePause}
                             onProgress={this.handleProgress}
                             onDuration={this.handleDuration}
-                        />
+                        />*/
+        }
+    };
+
+    render() {
+        const {playbackRate} = this.state;
+        const {playVideoFile} = this.props;
+        const {videoId} = playVideoFile;
+
+        let url = REMOTE_SERVER_URL + "/api/rattrap/video/video-file/" + 1 + "/play-video";
+        let videoJsOptions = {
+            sources: [{
+                src: url,
+                type: 'video/mp4'
+            }]
+        };
+        console.log(`就是查看信息json:${JSON.stringify(videoJsOptions)}`);
+        return (
+            <div>
+                <Row gutter={[16, 16]}>
+                    <Row span={20}>
+                        <VideoJSPlayerComponent {...videoJsOptions}/>
                     </Row>
                     <Divider/>
                     <Row span={4}>
@@ -154,13 +171,13 @@ class VideoPlayerComponent extends React.Component {
                             <ScissorOutlined
                                 twoToneColor="#52c41a"
                                 style={{fontSize: '30px', color: '#52c41a'}}
-                                onClick={this.handleScissorEvent} />
+                                onClick={this.handleScissorEvent}/>
                         </Col>
                         <Col span={4}>
                             <CheckCircleOutlined
                                 twoToneColor="#52c41a"
                                 style={{fontSize: '30px', color: '#ff0000'}}
-                                onClick={this.handleCheckEvent} />
+                                onClick={this.handleCheckEvent}/>
                         </Col>
                     </Row>
                 </Row>

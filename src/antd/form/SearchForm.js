@@ -4,9 +4,7 @@
  */
 
 import React from 'react';
-import { Form } from '@ant-design/compatible';
-import '@ant-design/compatible/assets/index.css';
-import { Row, Col, Button, Input, Table } from 'antd';
+import {Row, Col, Button, Input, Table, Form} from 'antd';
 import {connect} from "react-redux";
 import {createLoadLanguagePageDataSync} from "../../saga/type/FormAction";
 
@@ -39,19 +37,15 @@ class SearchForm extends React.Component {
     };
 
     searchFormElement = () => {
-        const {getFieldDecorator} = this.props.form;
         return (
             <Form className="ant-advanced-search-form">
                 <Row gutter={24}>
                     <Col span={8}>
-                        <Form.Item label={`名字`}>
-                            {getFieldDecorator(`name`, {
-                                rules: [
-                                    {
-                                        message: '输入名字!',
-                                    },
-                                ],
-                            })(<Input placeholder="输入查询的内容"/>)}
+                        <Form.Item
+                            label={`名字`}
+                            name={'name'}
+                            rules={[{required: true, message: '输入查询的内容'}]}>
+                            <Input placeholder="输入查询的内容"/>
                         </Form.Item>
                     </Col>
                 </Row>
@@ -99,6 +93,6 @@ const mapDispatchToProps = (dispatch) => {
     };
 };
 
-const SearchFormComponent = Form.create()(SearchForm);
+const SearchFormComponent = SearchForm;
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchFormComponent);
