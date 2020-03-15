@@ -4,7 +4,9 @@
  */
 
 import React from 'react';
-import {Form, Row, Col, Button, Input, Table} from 'antd';
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Row, Col, Button, Input, Table } from 'antd';
 import {connect} from "react-redux";
 import {createLoadLanguagePageDataSync} from "../../saga/type/FormAction";
 

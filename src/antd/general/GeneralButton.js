@@ -2,7 +2,9 @@
  * Created by liuxu on 2019-03-10 15:02:42
  * description: 展示AntD的各种按钮的样式和基本使用 通用的一些组件
  */
-import {Button, message, Row, Col,Upload,Icon} from 'antd';
+import { UploadOutlined } from '@ant-design/icons';
+
+import { Button, message, Row, Col, Upload } from 'antd';
 import React from "react";
 import {connect} from 'react-redux';
 
@@ -67,7 +69,7 @@ class GeneralButton extends React.Component {
                     <Col className={'gutter-row'} span={6}>
                         <Upload {...props}>
                             <Button>
-                                <Icon type="upload" /> Upload
+                                <UploadOutlined /> Upload
                             </Button>
                         </Upload>
                     </Col>

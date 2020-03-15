@@ -9,7 +9,8 @@ import {connect} from "react-redux";
 import ReactPlayer from "react-player";
 import {REMOTE_SERVER_URL} from "../../config/RemoteRestConfig";
 import keydown from "react-keydown";
-import {Divider, Icon, Row, message, Col,Modal} from "antd";
+import { CheckCircleOutlined, ScissorOutlined } from '@ant-design/icons';
+import { Divider, Row, message, Col, Modal } from "antd";
 import axios from 'axios';
 import {CUT_VIDEO_LIST_LOAD_SYNC} from "../../saga/type/VideoAction";
 import {loadCutVideoFilesSync} from "../../saga/sage/saga";
@@ -150,18 +151,16 @@ class VideoPlayerComponent extends React.Component {
                     <Divider/>
                     <Row span={4}>
                         <Col span={3}>
-                            <Icon
-                                type="scissor"
+                            <ScissorOutlined
                                 twoToneColor="#52c41a"
                                 style={{fontSize: '30px', color: '#52c41a'}}
-                                onClick={this.handleScissorEvent}
-                            />
+                                onClick={this.handleScissorEvent} />
                         </Col>
                         <Col span={4}>
-                            <Icon type="check-circle"
-                                  twoToneColor="#52c41a"
-                                  style={{fontSize: '30px', color: '#ff0000'}}
-                                  onClick={this.handleCheckEvent}/>
+                            <CheckCircleOutlined
+                                twoToneColor="#52c41a"
+                                style={{fontSize: '30px', color: '#ff0000'}}
+                                onClick={this.handleCheckEvent} />
                         </Col>
                     </Row>
                 </Row>
