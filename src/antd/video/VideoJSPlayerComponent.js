@@ -7,7 +7,8 @@
 import React from 'react';
 import videojs from 'video.js';
 import 'video.js/dist/video-js.css';
-import 'videojs-preview-thumbnails/dist/videojs-preview-thumbnails.js';
+import {REMOTE_SERVER_URL} from "../../config/RemoteRestConfig";
+import vttThumbnails from "videojs-vtt-thumbnails";
 
 class VideoJSPlayerComponent extends React.Component {
 
@@ -18,14 +19,17 @@ class VideoJSPlayerComponent extends React.Component {
             controls: true,
             playbackRates: [0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0, 5.5, 6.0, 6.5, 7.0, 7.5, 8.0, 8.5, 9.0, 10.0],
             plugins: {
-                examplePlugin: {
-                    exampleOption: true
-                }
+                vttThumbnails: {
+                    src: REMOTE_SERVER_URL + "/api/rattrap/video/video-file/" + 1 + "/vtt-file",
+                    width: 120,
+                    height: 90,
+                },
             },
         };
     }
 
     componentDidMount() {
+        videojs.registerPlugin('vttThumbnails', vttThumbnails);
         let properties = {...this.props, ...this.defaultProperties};
         this.player = videojs(this.videoNode, properties, function onPlayerReady() {
             console.log(`准备好播放视频了!!!!!!`);
@@ -39,14 +43,6 @@ class VideoJSPlayerComponent extends React.Component {
     }
 
     render() {
-        function examplePlugin(options) {
-            this.on('play', function (e) {
-                console.log('监控播放插件信息!');
-            });
-        }
-
-        videojs.registerPlugin('examplePlugin', examplePlugin);
-
         return (
             <div>
                 <video ref={node => this.videoNode = node} className={'video-js'}>

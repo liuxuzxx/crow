@@ -3,7 +3,7 @@
  * description: AntD的搜索按钮,和普通的按钮区别就是，icon不一样子
  */
 import React from 'react';
-import {Row, Col, Button} from 'antd';
+import {Row} from 'antd';
 
 class SearchButton extends React.Component {
     constructor(props) {

@@ -3,7 +3,7 @@
   "version": "2.0.1",
   "private": true,
   "dependencies": {
-    "antd": "^3.26.11",
+    "antd": "^4.0.0",
     "autoprefixer": "7.1.6",
     "axios": "^0.18.1",
     "babel-core": "6.26.0",
@@ -57,11 +57,13 @@
     "sw-precache-webpack-plugin": "0.11.4",
     "url-loader": "0.6.2",
     "video.js": "^7.7.5",
+    "videojs-offset": "^2.1.2",
     "videojs-preview-thumbnails": "^1.0.5",
     "webpack": "3.8.1",
     "webpack-dev-server": "2.9.4",
     "webpack-manifest-plugin": "1.3.2",
-    "whatwg-fetch": "2.0.3"
+    "whatwg-fetch": "2.0.3",
+    "videojs-vtt-thumbnails": "latest"
   },
   "scripts": {
     "start": "set PORT=12306 && node scripts/start.js",
