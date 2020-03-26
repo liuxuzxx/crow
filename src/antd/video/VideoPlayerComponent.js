@@ -10,7 +10,7 @@ import ReactPlayer from "react-player";
 import {REMOTE_SERVER_URL} from "../../config/RemoteRestConfig";
 import keydown from "react-keydown";
 import {CheckCircleOutlined, ScissorOutlined} from '@ant-design/icons';
-import {Divider, Row, message, Col, Modal} from "antd";
+import {Divider, Row, message, Col, Modal, Tag} from "antd";
 import axios from 'axios';
 import {CUT_VIDEO_LIST_LOAD_SYNC} from "../../saga/type/VideoAction";
 
@@ -51,12 +51,10 @@ class VideoPlayerComponent extends React.Component {
         }
     }
 
-    @keydown("ctrl+right")
+    @keydown("ctrl+m")
     handleCtrlRightEvent() {
-        console.log(`选择了加速视频10秒钟...`);
-        this.setState({seeking: false});
         let currentPlayTime = this.player.getCurrentTime() + 1;
-        this.player.seekTo(currentPlayTime);
+        this.player.seekTo(parseInt(currentPlayTime));
     }
 
     @keydown('ctrl+down')
@@ -69,10 +67,10 @@ class VideoPlayerComponent extends React.Component {
         }
     }
 
-    @keydown("ctrl+left")
+    @keydown("ctrl+b")
     handleCtrlLeftEvent() {
         let currentPlayTime = this.player.getCurrentTime() - 1;
-        this.player.seekTo(currentPlayTime);
+        this.player.seekTo(parseInt(currentPlayTime));
     }
 
     handlePause = () => {
@@ -131,12 +129,16 @@ class VideoPlayerComponent extends React.Component {
     render() {
         const {playbackRate} = this.state;
         const {playVideoFile} = this.props;
-        const {videoId} = playVideoFile;
+        const {videoId,fileName} = playVideoFile;
 
-        let url = REMOTE_SERVER_URL + "/api/rattrap/video/video-file/" + 1 + "/play-video";
+        let url = REMOTE_SERVER_URL + "/api/rattrap/video/video-file/" + videoId + "/play-video";
         return (
             <div>
                 <Row gutter={[16, 16]}>
+                    <Row span={20}>
+                        <Tag color={'red'}>{fileName}</Tag>
+                    </Row>
+                    <Divider/>
                     <Row span={20}>
                         <ReactPlayer
                             className='react-player'
