@@ -140,7 +140,7 @@ class EchartComponent extends React.Component {
                     onEvents={this.getEvents()}
                     style={{ height: '100%', width: '100%' }}
                     theme={"theme_name"} />
-                <Button type={'primary'} value={'点击我'} onClick={this.handleClickMe} >惦记我</Button>
+                <Button type={'primary'} value={'点击我'} onClick={this.handleClickMe} >点击我</Button>
             </div>
         );
     }

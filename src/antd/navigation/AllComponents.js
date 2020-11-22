@@ -8,6 +8,7 @@ import SearchButton from '../general/SearchButton';
 import SearchFormComponent from '../form/SearchForm';
 import VideoPlayerComponent from "../video/VideoPlayerComponent";
 import VideoFileShowComponent from "../video/VideoPlayerTagComponent";
+import StockHistory from "../stock/StockHistory";
 
 export {
     GeneralButton,
@@ -15,4 +16,5 @@ export {
     SearchFormComponent,
     VideoPlayerComponent,
     VideoFileShowComponent,
+    StockHistory,
 };

@@ -6,11 +6,13 @@ import {combineReducers} from 'redux';
 import {homeMenuReducer} from './HomeIndexReducer';
 import {formReducer} from "./FormReducer";
 import {videoReducer} from "./VideoReducer";
+import {stockReducer} from "./StockReducer";
 
 const rootReducer = combineReducers({
     home: homeMenuReducer,
     form: formReducer,
     video: videoReducer,
+    stock: stockReducer,
 });
 
 export default rootReducer;

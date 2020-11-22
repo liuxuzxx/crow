@@ -4,11 +4,17 @@
  */
 import React from 'react';
 import Icon from '@ant-design/icons';
-import { Layout } from 'antd';
+import {Layout} from 'antd';
 import {connect} from 'react-redux';
 import {createLoadMenuAsyncAction} from '../../saga/type/HomeIndexAction';
 import NavigationMenu from '../navigation/NavigationMenu';
-import {GeneralButton, SearchButton, SearchFormComponent, VideoFileShowComponent} from '../navigation/AllComponents';
+import {
+    GeneralButton,
+    SearchButton,
+    SearchFormComponent,
+    VideoFileShowComponent,
+    StockHistory
+} from '../navigation/AllComponents';
 import {BrowserRouter as Router, Route} from 'react-router-dom';
 import EchartComponent from "../echart/EchartComponent";
 
@@ -53,7 +59,7 @@ class SelfDefineTriggerLayout extends React.Component {
                         <div className="logo"/>
                         <NavigationMenu menus={menus}/>
                     </Sider>
-                    <Layout style={{ marginLeft: 200 }}>
+                    <Layout style={{marginLeft: 200}}>
                         <Header style={{background: '#fff', padding: 0}}>
                             <Icon
                                 className="trigger"
@@ -70,6 +76,7 @@ class SelfDefineTriggerLayout extends React.Component {
                             <Route path={"/crow/echarts/echart-component"} component={EchartComponent}/>
                             <Route path={"/crow/form/search-form"} component={SearchFormComponent}/>
                             <Route path={"/crow/video/video-files"} component={VideoFileShowComponent}/>
+                            <Route path={"/crow/stock/stock-history"} component={StockHistory}/>
                         </Content>
                     </Layout>
                 </Layout>

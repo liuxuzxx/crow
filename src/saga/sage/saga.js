@@ -13,6 +13,11 @@ import {
     VIDEO_FILE_LIST_LOAD,
     VIDEO_FILE_LIST_LOAD_SYNC
 } from "../type/VideoAction";
+import {
+    STOCK_STOCK_HISTORY_DATA_LOAD,
+    STOCK_STOCK_HISTORY_DATA_LOAD_SYNC,
+    STOCK_STOCK_SEARCH_LOAD, STOCK_STOCK_SEARCH_LOAD_SYNC
+} from "../type/StockAction";
 
 export function* loadHomeMenuSync() {
     let payload = [
@@ -94,6 +99,12 @@ export function* loadHomeMenuSync() {
                     menuName: 'Video',
                     menuType: 'video-camera',
                     link: '/crow/video/video-files',
+                },
+                {
+                    menuId: 50002,
+                    menuName: 'Stock',
+                    menuType: 'video-camera',
+                    link: '/crow/stock/stock-history'
                 }
             ]
         }
@@ -138,7 +149,7 @@ export function* loadVideoFilesSync() {
 }
 
 export function* loadCutVideoFilesSync(param) {
-    const {parentId} =  param;
+    const {parentId} = param;
     let url = REMOTE_SERVER_URL + "/api/rattrap/video/cut-video/" + parentId + "/videos";
     let data = {};
     yield axios.get(url)
@@ -148,9 +159,33 @@ export function* loadCutVideoFilesSync(param) {
     yield put(createCutVideoLoad(data));
 }
 
+export function* loadStockHistoryData(param) {
+    const {stockCode} = param;
+    let url = REMOTE_SERVER_URL + "/api/rattrap/stock/" + stockCode + "/history-data";
+    let data = [];
+    yield axios.get(url)
+        .then(function (response) {
+            data = response.data.data;
+        });
+    yield put({type: STOCK_STOCK_HISTORY_DATA_LOAD, payload: data});
+}
+
+export function* searchStock(param) {
+    const {condition} = param;
+    let url = REMOTE_SERVER_URL + "/api/rattrap/stock/stock?condition=" + condition;
+    let data = [];
+    yield axios.get(url)
+        .then(function (response) {
+            data = response.data.data;
+        });
+    yield put({type: STOCK_STOCK_SEARCH_LOAD, payload: data});
+}
+
 export default function* watchIncrementAsync() {
     yield takeLatest(HOME_INDEX_ACTION_LOAD_MENU_ASYNC, loadHomeMenuSync);
     yield takeLatest(FORM_LOAD_LANGUAGE_PAGE_DATA_SYNC, loadFormLanguageSync);
     yield takeLatest(VIDEO_FILE_LIST_LOAD_SYNC, loadVideoFilesSync);
     yield takeLatest(CUT_VIDEO_LIST_LOAD_SYNC, loadCutVideoFilesSync);
+    yield takeLatest(STOCK_STOCK_HISTORY_DATA_LOAD_SYNC, loadStockHistoryData);
+    yield takeLatest(STOCK_STOCK_SEARCH_LOAD_SYNC, searchStock);
 }
